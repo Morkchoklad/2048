@@ -1,0 +1,57 @@
+
+
+#idTable{
+    width: 40vw;
+    height: 40vw;
+    margin: auto;
+    background-color: #bbada0;
+    border-radius: 1%;
+    padding: 0.5%;
+    table-layout: fixed;
+}
+
+#idCompteur{
+
+    width: 40vw;
+    margin: auto;
+    text-align: center;
+}
+
+#idTable div{
+
+    font-weight: bold;
+    font-size: 2vw;
+    text-align: center;
+    vertical-align: middle;
+    border-radius: 20%;
+    display: flex;
+    justify-content: center;
+}
+
+    
+#idTable .empty{
+
+    background-color: rgba(238, 228, 218, 0.35);
+    height: 100%;
+    color: rgba(238, 228, 218, 0);
+}
+
+
+#idTable .box{
+  
+    height: 100%;
+    
+    color: #776e65;
+    
+    background-color: #eee4da;;
+  
+ 
+}
+
+span {
+    margin: auto;
+    display: block;
+   
+}
+
+

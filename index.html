@@ -1,0 +1,483 @@
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+      <meta charset="utf-8">
+    
+      <title>2048</title>
+  <style>
+
+    
+
+#idTable{
+    width: 40vw;
+    height: 40vw;
+    margin: auto;
+    background-color: #bbada0;
+    border-radius: 1%;
+    padding: 0.5%;
+    table-layout: fixed;
+}
+
+#idCompteur{
+
+    width: 40vw;
+    margin: auto;
+    text-align: center;
+}
+
+#idTable div{
+
+    font-weight: bold;
+    font-size: 2vw;
+    text-align: center;
+    vertical-align: middle;
+    border-radius: 20%;
+    display: flex;
+    justify-content: center;
+}
+
+    
+#idTable .empty{
+
+    background-color: rgba(238, 228, 218, 0.35);
+    height: 100%;
+    color: rgba(238, 228, 218, 0);
+}
+
+
+#idTable .box{
+  
+    height: 100%;
+    
+    color: #776e65;
+    
+    background-color: #eee4da;;
+  
+ 
+}
+
+span {
+    margin: auto;
+    display: block;
+   
+}
+
+
+
+
+  </style>
+
+  <script  src="http://code.jquery.com/jquery-latest.js"></script>
+  <script >
+
+
+  function isFinished() {
+    
+    var lost = true;
+    
+    array.forEach(element => {
+
+
+      element.forEach(number => {
+        if(number == 0){
+
+          lost = false;
+
+        } else if (number >= 2048) {
+          document.writeln("Vous avez gagne !!!");
+          return
+        }
+      });
+    });
+
+    
+
+    for (let i = 0; i < array.length-1; i++) {
+      for (let j = 0; j < array.length-1; j++) {
+        if (array[i][j] == array[i+1][j] || array[i][j] == array[i][j+1]) {
+          lost = false;
+        }
+      }
+      
+    }
+
+    if (lost == true) {
+      
+      document.writeln("Vous avez perdu")
+
+    }
+
+    
+  }
+
+
+  function createArray(length) {
+      var array = new Array(length);
+      
+      for (let i = 0; i < length; i++) {
+        
+          array[i] = new Array(length);
+          for (let j = 0; j < length; j++) {
+            array[i][j] = 0;
+          
+          }
+        
+      }
+
+
+      for (let i = 0; i < 2; i++) {
+        
+        var newNumber = (1+Math.floor(Math.random() * 2))*2;
+      var newSloti = 0;
+      var newSlotj = 0;
+      do {
+      newSloti = Math.floor(Math.random() * array.length)
+      newSlotj = Math.floor(Math.random() * array.length)
+      } while (array[newSloti][newSlotj] != 0);
+  
+      array[newSloti][newSlotj] = newNumber;
+      }
+   
+      
+      return array;
+
+      
+  }
+
+  function goRight(){
+
+  var worked = false;
+  
+    for (let y = array.length-1; y >= 0; y--) {
+
+  for (let i = 0; i < array.length; i++) {
+    const element = array[i][y];
+    let ytemp = y;
+
+
+    
+    
+    if(element != 0){
+    
+      while(ytemp < array.length-1){
+      
+
+
+        
+
+
+        if (array[i][ytemp+1] == element) {
+          array[i][ytemp + 1] = 2*element;
+          array[i][ytemp] = 0;
+          ytemp++;
+          worked = true;
+
+          $("#" + i + "" + y).animate({top: "+=50"},2000)
+
+        } else if (array[i][ytemp+1] == 0) {
+          array[i][ytemp + 1] = element;
+          array[i][ytemp] = 0;
+          ytemp++;
+          worked = true;
+
+          console.log("#" + i + "" + y);
+          $("#" + i + "" + y).animate({top:"+=30px"},1000);
+
+        } else {
+
+          break;  
+      
+        }
+      }
+      
+    }
+
+   
+
+  }
+
+
+
+  }
+  if (worked) {
+    var newNumber = (1+Math.floor(Math.random() * 2))*2;
+  var newSlot = 0;
+  do {
+    newSlot = Math.floor(Math.random() * array.length)
+  } while (array[newSlot][0] != 0);
+  
+  array[newSlot][0] = newNumber;
+ 
+  
+  return array;
+  }
+  }
+
+  function goLeft() {
+
+  var worked = false;
+
+    for (let y = 1; y < array.length; y++) {
+
+  for (let i = 0; i < array.length; i++) {
+    const element = array[i][y];
+    let ytemp = y;
+    
+    if(element != 0){
+    
+      while(ytemp > 0){
+    
+
+
+        
+        if (array[i][ytemp-1] == element) {
+          array[i][ytemp - 1] = 2*element;
+        array[i][ytemp] = 0;
+        ytemp--;
+        worked = true;
+        } else if (array[i][ytemp-1] == 0) {
+          array[i][ytemp - 1] = element;
+        array[i][ytemp] = 0;
+        ytemp--;
+        worked = true;
+        } else {
+
+          break;  
+      
+        }
+
+
+      }
+      
+    }
+  }
+
+
+
+  }
+  if (worked) {
+    var newNumber = (1+Math.floor(Math.random() * 2))*2;
+  var newSlot = 0;
+  do {
+    newSlot = Math.floor(Math.random() * array.length)
+  } while (array[newSlot][array.length-1] != 0);
+  
+  array[newSlot][array.length-1] = newNumber;
+ 
+
+  return array;
+  }
+  }
+
+  function goUp() {
+
+    var worked = false;
+    
+    for (let i = 1; i < array.length; i++) {
+
+  for (let y = 0; y < array.length; y++) {
+    const element = array[i][y];
+    let itemp = i;
+    
+    if(element != 0){
+      
+      while(itemp > 0 ){
+
+        if (array[itemp - 1][y] == element) {
+          array[itemp - 1][y] = 2*element
+        array[itemp][y] = 0
+        itemp--;
+        worked = true
+        } else if (array[itemp - 1][y] == 0) {
+          array[itemp - 1][y] = element
+        array[itemp][y] = 0
+        itemp--;
+        worked = true
+        } else {
+
+          break;  
+      
+        }
+
+
+        
+
+
+      }
+      
+    }
+
+    
+  }
+
+
+
+  }
+  if (worked) {
+    var newNumber = (1+Math.floor(Math.random() * 2))*2;
+  var newSlot = 0;
+  do {
+    newSlot = Math.floor(Math.random() * array.length)
+  } while (array[array.length-1][newSlot] != 0);
+  
+  array[array.length-1][newSlot] = newNumber;
+ 
+
+  return array;
+  }
+  }
+
+  function goDown(){
+
+    var worked = false;
+
+    for (let i = array.length-1; i >= 0; i--) {
+
+    for (let y = 0; y < array.length; y++) {
+    const element = array[i][y];
+    let itemp = i;
+    
+    if(element != 0){
+      
+      while(itemp < array.length-1 ){
+
+
+
+        if (array[itemp + 1][y] == element) {
+          array[itemp + 1][y] = 2*element;
+          array[itemp][y] = 0;
+          itemp++;
+          worked = true;
+        } else if (array[itemp + 1][y] == 0) {
+          array[itemp + 1][y] = element; 
+          array[itemp][y] = 0;
+          itemp++;
+          worked = true;
+        } else {
+
+          break;  
+      
+        }
+
+        
+
+
+
+      }
+      
+    } 
+  }
+
+
+
+  }
+
+  if (worked) {
+    var newNumber = (1+Math.floor(Math.random() * 2))*2;
+  var newSlot = 0;
+  do {
+    newSlot = Math.floor(Math.random() * array.length)
+  } while (array[0][newSlot] != 0);
+  
+  array[0][newSlot] = newNumber;
+ 
+
+  return array;
+  }
+  }
+
+  
+
+  function makeTable() {
+
+    var tableHTML = ""
+
+      for (let i = 0; i < array.length; i++) {
+        tableHTML += "<tr>"
+        for (let j = 0; j < array.length; j++) {
+          
+          if (array[i][j] == 0) {
+            tableHTML +=  '<td><div class="empty" id="" ' + i + ' ' + j + ' >'+ array[i][j] +'</div></td>'
+          } else {
+            tableHTML += '<td><div class="box"><span>'+ array[i][j] +"</span></div></td>"
+          }
+        }
+        tableHTML += "</tr>"
+      }
+
+      $("#idTable").html(tableHTML);
+      $("#idCompteur").html(nbMoves++)
+      isFinished();
+  }
+
+  
+
+  var array;
+  var nbMoves = 0;
+
+  $(document).ready(function(){ 
+    var size = prompt("Entrez les dimensions du plan de jeu");
+    array = createArray(size);
+    makeTable();
+ 
+
+
+
+
+  $(document).keydown(function (e) {
+
+    e.preventDefault();
+
+      if (e.which == 39) {
+        goRight();
+        makeTable();
+      } else if (e.which == 37 ) {
+        goLeft();
+        makeTable();
+
+      } else if (e.which == 38) {
+
+        goUp();
+        makeTable();
+
+      } else if (e.which == 40) {
+        
+        goDown();
+        makeTable();
+
+      } 
+  });
+
+  
+
+ 
+
+    
+
+   
+    
+   
+    
+                
+  })
+  
+
+  </script>
+
+  </head>
+  <body>
+
+    <div id="idBoard">
+      <div id="idCompteur">0</div>
+      <table id="idTable"></table>
+
+    </div>
+
+
+ 
+
+
+ 
+  
+  </body>
+  </html>
